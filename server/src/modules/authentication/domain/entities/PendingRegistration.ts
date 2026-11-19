@@ -62,37 +62,4 @@ export class PendingRegistration {
   isOtpExpired(): boolean {
     return new Date() > this.props.otpExpiresAt;
   }
-
-  isRegistrationExpired(): boolean {
-    return new Date() > this.props.expiresAt;
-  }
-
-  isMaxAttemptsExceeded(maxAttempts = 5): boolean {
-    return this.props.otpAttempts >= maxAttempts;
-  }
-
-  incrementAttempts(): void {
-    this.props.otpAttempts += 1;
-    this.props.updatedAt = new Date();
-  }
-
-  getResendCooldownSecondsRemaining(cooldownSeconds = 60): number {
-    const elapsedSeconds = Math.floor((Date.now() - this.props.lastOtpSentAt.getTime()) / 1000);
-    const remaining = cooldownSeconds - elapsedSeconds;
-    return remaining > 0 ? remaining : 0;
-  }
-
-  canResendOtp(cooldownSeconds = 60): boolean {
-    return this.getResendCooldownSecondsRemaining(cooldownSeconds) === 0;
-  }
-
-  updateOtp(newOtpHash: string, newOtpExpiresAt: Date): void {
-    const now = new Date();
-    this.props.otpHash = newOtpHash;
-    this.props.otpExpiresAt = newOtpExpiresAt;
-    this.props.otpAttempts = 0;
-    this.props.resendCount += 1;
-    this.props.lastOtpSentAt = now;
-    this.props.updatedAt = now;
-  }
 }
