@@ -16,11 +16,11 @@ export interface PendingRegistrationProps {
 export class PendingRegistration {
   private constructor(private readonly props: PendingRegistrationProps) {}
 
-  public static create(props: PendingRegistrationProps): PendingRegistration {
+  static create(props: PendingRegistrationProps): PendingRegistration {
     return new PendingRegistration(props);
   }
 
-  public static createNew(params: {
+  static createNew(params: {
     id: string;
     name: string;
     email: string;
@@ -59,34 +59,34 @@ export class PendingRegistration {
   get createdAt(): Date { return this.props.createdAt; }
   get updatedAt(): Date { return this.props.updatedAt; }
 
-  public isOtpExpired(): boolean {
+  isOtpExpired(): boolean {
     return new Date() > this.props.otpExpiresAt;
   }
 
-  public isRegistrationExpired(): boolean {
+  isRegistrationExpired(): boolean {
     return new Date() > this.props.expiresAt;
   }
 
-  public isMaxAttemptsExceeded(maxAttempts = 5): boolean {
+  isMaxAttemptsExceeded(maxAttempts = 5): boolean {
     return this.props.otpAttempts >= maxAttempts;
   }
 
-  public incrementAttempts(): void {
+  incrementAttempts(): void {
     this.props.otpAttempts += 1;
     this.props.updatedAt = new Date();
   }
 
-  public getResendCooldownSecondsRemaining(cooldownSeconds = 60): number {
+  getResendCooldownSecondsRemaining(cooldownSeconds = 60): number {
     const elapsedSeconds = Math.floor((Date.now() - this.props.lastOtpSentAt.getTime()) / 1000);
     const remaining = cooldownSeconds - elapsedSeconds;
     return remaining > 0 ? remaining : 0;
   }
 
-  public canResendOtp(cooldownSeconds = 60): boolean {
+  canResendOtp(cooldownSeconds = 60): boolean {
     return this.getResendCooldownSecondsRemaining(cooldownSeconds) === 0;
   }
 
-  public updateOtp(newOtpHash: string, newOtpExpiresAt: Date): void {
+  updateOtp(newOtpHash: string, newOtpExpiresAt: Date): void {
     const now = new Date();
     this.props.otpHash = newOtpHash;
     this.props.otpExpiresAt = newOtpExpiresAt;
