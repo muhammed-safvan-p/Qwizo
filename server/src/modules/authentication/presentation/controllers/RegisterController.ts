@@ -6,7 +6,7 @@ import { ApiResponse } from '../../../../shared/presentation/utils/ApiResponse.j
 export class RegisterController {
   constructor(private readonly initiateRegistrationUseCase: IInitiateRegistrationUseCase) {}
 
-  async handle(req: Request, res: Response, next: NextFunction): Promise<void> {
+  handle = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const validated = registerSchema.parse(req.body);
 
@@ -27,5 +27,5 @@ export class RegisterController {
     } catch (error) {
       next(error);
     }
-  }
+  };
 }

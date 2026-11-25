@@ -43,6 +43,12 @@ export class VerifyOtpUseCase {
     const isOtpValid = this.otpHasher.compare(otp, pendingReg.otpHash);
     if (!isOtpValid) {
       pendingReg.incrementAttempts();
+      await this.pendingRegistrationRepo.update(pendingReg);
+
+      if (pendingReg.isMaxAttemptsExceeded()) {
+        throw AppError.badRequest('Max attempts reached. Please request a new OTP.');
+      }
+
       throw AppError.unauthorized('Invalid Otp');
     }
 
