@@ -44,8 +44,6 @@ export class InitiateRegistrationUseCase implements IInitiateRegistrationUseCase
         );
       }
 
-      // Hash password
-      const passwordHash = await this.passwordHasher.hash(input.password);
       const otp = this.otpGenerator.generate(6);
       const otpHash = this.otpHasher.hash(otp);
       const otpExpiresAt = new Date(Date.now() + 10 * 60 * 1000);
