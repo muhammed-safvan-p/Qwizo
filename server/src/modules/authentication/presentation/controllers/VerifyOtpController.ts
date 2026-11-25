@@ -1,6 +1,7 @@
 import type { Request, Response, NextFunction } from 'express';
 import type { IInitiateVerifyOtpUseCase } from '../../application/ports/IInitiateVerifyOtpUseCase.js';
 import { verifyOtpSchema } from '../validators/verifyOtp.validator.js';
+import { ApiResponse } from '../../../../shared/presentation/utils/ApiResponse.js';
 
 export class VerifyOtpController {
   constructor(private readonly initiateVerifyOtpUseCase: IInitiateVerifyOtpUseCase) {}
@@ -11,15 +12,15 @@ export class VerifyOtpController {
 
       const result = await this.initiateVerifyOtpUseCase.execute(validated);
 
-      res.status(201).json({
-        success: true,
-        message: result.message,
-        data: {
+      ApiResponse.created(
+        res,
+        {
           accessToken: result.accessToken,
           refreshToken: result.refreshToken,
           user: result.user,
         },
-      });
+        result.message,
+      );
     } catch (error) {
       next(error);
     }

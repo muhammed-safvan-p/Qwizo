@@ -1,6 +1,7 @@
 import type { Request, Response, NextFunction } from 'express';
 import { registerSchema } from '../validators/register.validator.js';
 import type { IInitiateRegistrationUseCase } from '../../application/ports/IInitiateRegistrationUseCase.js';
+import { ApiResponse } from '../../../../shared/presentation/utils/ApiResponse.js';
 
 export class RegisterController {
   constructor(private readonly initiateRegistrationUseCase: IInitiateRegistrationUseCase) {}
@@ -15,14 +16,14 @@ export class RegisterController {
         password: validated.password,
       });
 
-      res.status(201).json({
-        success: true,
-        message: result.message,
-        data: {
+      ApiResponse.created(
+        res,
+        {
           email: result.email,
           expiresInSeconds: result.expiresInSeconds,
         },
-      });
+        result.message,
+      );
     } catch (error) {
       next(error);
     }
