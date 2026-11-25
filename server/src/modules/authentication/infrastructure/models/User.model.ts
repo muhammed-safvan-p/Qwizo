@@ -1,16 +1,16 @@
-import mongoose, { Schema, type Model } from "mongoose";
+import mongoose, { Schema, type Model } from 'mongoose';
 
 export interface IUserDoc {
   _id: string;
   name: string;
   email: string;
   passwordHash: string | null;
-  role: "USER" | "ADMIN";
+  role: 'USER' | 'ADMIN';
   avatarUrl?: string | null;
   isEmailVerified: boolean;
   emailVerifiedAt?: Date | null;
   isSuspended: boolean;
-  authProvider: "local" | "google";
+  authProvider: 'local' | 'google';
   credits: {
     balance: number;
     reserved: number;
@@ -45,8 +45,8 @@ const userSchema = new Schema<IUserDoc>(
     },
     role: {
       type: String,
-      enum: ["USER", "ADMIN"],
-      default: "USER",
+      enum: ['USER', 'ADMIN'],
+      default: 'USER',
     },
     avatarUrl: {
       type: String,
@@ -66,8 +66,8 @@ const userSchema = new Schema<IUserDoc>(
     },
     authProvider: {
       type: String,
-      enum: ["local", "google"],
-      default: "local",
+      enum: ['local', 'google'],
+      default: 'local',
     },
     credits: {
       balance: { type: Number, default: 0 },
@@ -78,9 +78,9 @@ const userSchema = new Schema<IUserDoc>(
   },
   {
     timestamps: true,
-    collection: "users",
-  }
+    collection: 'users',
+  },
 );
 
 export const UserModel: Model<IUserDoc> =
-  mongoose.models.User || mongoose.model<IUserDoc>("User", userSchema);
+  mongoose.models.User || mongoose.model<IUserDoc>('User', userSchema);

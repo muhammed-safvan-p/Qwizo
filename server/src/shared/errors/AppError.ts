@@ -7,8 +7,8 @@ export class AppError extends Error {
   constructor(
     message: string,
     statusCode = 500,
-    code = "INTERNAL_SERVER_ERROR",
-    details?: unknown
+    code = 'INTERNAL_SERVER_ERROR',
+    details?: unknown,
   ) {
     super(message);
     this.name = this.constructor.name;
@@ -21,27 +21,26 @@ export class AppError extends Error {
   }
 
   static badRequest(message: string, details?: unknown): AppError {
-    return new AppError(message, 400, "BAD_REQUEST", details);
+    return new AppError(message, 400, 'BAD_REQUEST', details);
   }
 
-  static unauthorized(message = "Unauthorized access"): AppError {
-    return new AppError(message, 401, "UNAUTHORIZED");
+  static unauthorized(message = 'Unauthorized access'): AppError {
+    return new AppError(message, 401, 'UNAUTHORIZED');
   }
 
-  static forbidden(message = "Forbidden access"): AppError {
-    return new AppError(message, 403, "FORBIDDEN");
+  static forbidden(message = 'Forbidden access'): AppError {
+    return new AppError(message, 403, 'FORBIDDEN');
   }
 
-  static notFound(message = "Resource not found"): AppError {
-    return new AppError(message, 404, "NOT_FOUND");
+  static notFound(message = 'Resource not found'): AppError {
+    return new AppError(message, 404, 'NOT_FOUND');
   }
 
   static conflict(message: string): AppError {
-    return new AppError(message, 409, "CONFLICT");
+    return new AppError(message, 409, 'CONFLICT');
   }
 
-  static internal(message = "Internal server error"): AppError {
-    return new AppError(message, 500, "INTERNAL_SERVER_ERROR");
+  static internal(message = 'Internal server error'): AppError {
+    return new AppError(message, 500, 'INTERNAL_SERVER_ERROR');
   }
 }
-

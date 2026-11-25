@@ -1,6 +1,6 @@
-import type { IUserRepository } from "../../application/ports/IUserRepository.js";
-import { User } from "../../domain/entities/User.js";
-import { type IUserDoc, UserModel } from "../models/User.model.js";
+import type { IUserRepository } from '../../application/ports/IUserRepository.js';
+import { User } from '../../domain/entities/User.js';
+import { type IUserDoc, UserModel } from '../models/User.model.js';
 
 export class MongoUserRepository implements IUserRepository {
   async findById(id: string): Promise<User | null> {
@@ -10,13 +10,17 @@ export class MongoUserRepository implements IUserRepository {
   }
 
   async findByEmail(email: string): Promise<User | null> {
-    const doc = await UserModel.findOne({ email: email.toLowerCase().trim() }).lean<IUserDoc>();
+    const doc = await UserModel.findOne({
+      email: email.toLowerCase().trim(),
+    }).lean<IUserDoc>();
     if (!doc) return null;
     return this.toEntity(doc);
   }
 
   async existsByEmail(email: string): Promise<boolean> {
-    const count = await UserModel.countDocuments({ email: email.toLowerCase().trim() });
+    const count = await UserModel.countDocuments({
+      email: email.toLowerCase().trim(),
+    });
     return count > 0;
   }
 
@@ -51,7 +55,7 @@ export class MongoUserRepository implements IUserRepository {
           credits: user.credits,
           updatedAt: new Date(),
         },
-      }
+      },
     );
   }
 
@@ -73,4 +77,3 @@ export class MongoUserRepository implements IUserRepository {
     });
   }
 }
-

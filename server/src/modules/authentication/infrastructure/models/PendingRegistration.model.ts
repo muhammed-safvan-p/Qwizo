@@ -1,4 +1,4 @@
-import mongoose, { Schema, type Model } from "mongoose";
+import mongoose, { Schema, type Model } from 'mongoose';
 
 export interface IPendingRegistrationDoc {
   _id: string;
@@ -64,8 +64,8 @@ const pendingRegistrationSchema = new Schema<IPendingRegistrationDoc>(
   },
   {
     timestamps: true,
-    collection: "pendingRegistrations",
-  }
+    collection: 'pendingRegistrations',
+  },
 );
 
 // TTL index: automatically deletes expired pending registrations
@@ -73,7 +73,4 @@ pendingRegistrationSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 });
 
 export const PendingRegistrationModel: Model<IPendingRegistrationDoc> =
   mongoose.models.PendingRegistration ||
-  mongoose.model<IPendingRegistrationDoc>(
-    "PendingRegistration",
-    pendingRegistrationSchema
-  );
+  mongoose.model<IPendingRegistrationDoc>('PendingRegistration', pendingRegistrationSchema);

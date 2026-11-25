@@ -1,9 +1,9 @@
-import type { Request, Response, NextFunction } from "express";
-import { registerSchema } from "../validators/register.validator.js";
-import type { InitiateRegistrationUseCase } from "../../application/use-cases/InitiateRegistrationUseCase.js";
+import type { Request, Response, NextFunction } from 'express';
+import { registerSchema } from '../validators/register.validator.js';
+import type { IInitiateRegistrationUseCase } from '../../application/ports/IInitiateRegistrationUseCase.js';
 
 export class RegisterController {
-  constructor(private readonly initiateRegistrationUseCase: InitiateRegistrationUseCase) {}
+  constructor(private readonly initiateRegistrationUseCase: IInitiateRegistrationUseCase) {}
 
   async handle(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
@@ -28,4 +28,3 @@ export class RegisterController {
     }
   }
 }
-

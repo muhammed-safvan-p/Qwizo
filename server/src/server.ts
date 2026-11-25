@@ -1,11 +1,10 @@
-import dotenv from "dotenv";
+import dotenv from 'dotenv';
 dotenv.config();
 
-import app from "./app.js";
-import { connectDatabase } from "./shared/infrastructure/database/mongo.connection.js";
+import app from './app.js';
+import { connectDatabase } from './shared/infrastructure/database/mongo.connection.js';
 
 const PORT = process.env.PORT || 5000;
-
 
 const startServer = async (): Promise<void> => {
   try {
@@ -14,9 +13,8 @@ const startServer = async (): Promise<void> => {
     app.listen(PORT, () => {
       console.log(`Qwizo server running on port ${PORT}`);
     });
-
   } catch (error) {
-    console.error("Failed to start Qwizo server:", error);
+    console.error('Failed to start Qwizo server:', error);
 
     process.exit(1);
   }

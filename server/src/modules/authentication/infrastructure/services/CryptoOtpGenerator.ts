@@ -1,5 +1,5 @@
-import crypto from "node:crypto";
-import type { IOTPGenerator } from "../../application/ports/IOTPGenerator.js";
+import crypto from 'node:crypto';
+import type { IOTPGenerator } from '../../application/ports/IOTPGenerator.js';
 
 export class CryptoOtpGenerator implements IOTPGenerator {
   generate(length = 6): string {
@@ -8,4 +8,3 @@ export class CryptoOtpGenerator implements IOTPGenerator {
     return crypto.randomInt(min, max + 1).toString();
   }
 }
-

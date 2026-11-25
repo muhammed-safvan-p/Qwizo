@@ -1,9 +1,8 @@
-import crypto from "node:crypto";
-import type { IIdGenerator } from "../../application/ports/IIdGenerator.js";
+import crypto from 'node:crypto';
+import type { IIdGenerator } from '../../application/ports/IIdGenerator.js';
 
 export class UuidGenerator implements IIdGenerator {
   generate(): string {
     return crypto.randomUUID();
   }
 }
-

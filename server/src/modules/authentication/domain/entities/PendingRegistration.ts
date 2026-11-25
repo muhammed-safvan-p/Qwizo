@@ -46,20 +46,77 @@ export class PendingRegistration {
     });
   }
 
-  get id(): string { return this.props.id; }
-  get name(): string { return this.props.name; }
-  get email(): string { return this.props.email; }
-  get passwordHash(): string { return this.props.passwordHash; }
-  get otpHash(): string { return this.props.otpHash; }
-  get otpExpiresAt(): Date { return this.props.otpExpiresAt; }
-  get otpAttempts(): number { return this.props.otpAttempts; }
-  get resendCount(): number { return this.props.resendCount; }
-  get lastOtpSentAt(): Date { return this.props.lastOtpSentAt; }
-  get expiresAt(): Date { return this.props.expiresAt; }
-  get createdAt(): Date { return this.props.createdAt; }
-  get updatedAt(): Date { return this.props.updatedAt; }
+  get id(): string {
+    return this.props.id;
+  }
+  get name(): string {
+    return this.props.name;
+  }
+  get email(): string {
+    return this.props.email;
+  }
+  get passwordHash(): string {
+    return this.props.passwordHash;
+  }
+  get otpHash(): string {
+    return this.props.otpHash;
+  }
+  get otpExpiresAt(): Date {
+    return this.props.otpExpiresAt;
+  }
+  get otpAttempts(): number {
+    return this.props.otpAttempts;
+  }
+  get resendCount(): number {
+    return this.props.resendCount;
+  }
+  get lastOtpSentAt(): Date {
+    return this.props.lastOtpSentAt;
+  }
+  get expiresAt(): Date {
+    return this.props.expiresAt;
+  }
+  get createdAt(): Date {
+    return this.props.createdAt;
+  }
+  get updatedAt(): Date {
+    return this.props.updatedAt;
+  }
 
   isOtpExpired(): boolean {
     return new Date() > this.props.otpExpiresAt;
+  }
+
+  isRegistrationExpired(): boolean {
+    return new Date() > this.props.expiresAt;
+  }
+
+  isMaxAttemptsExceeded(maxAttempts = 5): boolean {
+    return this.props.otpAttempts >= maxAttempts;
+  }
+
+  incrementAttempts(): void {
+    this.props.otpAttempts += 1;
+    this.props.updatedAt = new Date();
+  }
+
+  getResendCooldownSecondsRemaining(cooldownSeconds = 60): number {
+    const elapsedSeconds = Math.floor((Date.now() - this.props.lastOtpSentAt.getTime()) / 1000);
+    const remaining = cooldownSeconds - elapsedSeconds;
+    return remaining > 0 ? remaining : 0;
+  }
+
+  canResendOtp(cooldownSeconds = 60): boolean {
+    return this.getResendCooldownSecondsRemaining(cooldownSeconds) === 0;
+  }
+
+  updateOtp(newOtpHash: string, newOtpExpiresAt: Date): void {
+    const now = new Date();
+    this.props.otpHash = newOtpHash;
+    this.props.otpExpiresAt = newOtpExpiresAt;
+    this.props.otpAttempts = 0;
+    this.props.resendCount += 1;
+    this.props.lastOtpSentAt = now;
+    this.props.updatedAt = now;
   }
 }

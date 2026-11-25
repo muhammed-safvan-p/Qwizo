@@ -1,5 +1,5 @@
-import { Resend } from "resend";
-import type { IEmailService } from "../../application/ports/IEmailService.js";
+import { Resend } from 'resend';
+import type { IEmailService } from '../../application/ports/IEmailService.js';
 
 export class ResendEmailService implements IEmailService {
   private resend: Resend | null = null;
@@ -10,7 +10,7 @@ export class ResendEmailService implements IEmailService {
     if (apiKey) {
       this.resend = new Resend(apiKey);
     }
-    this.fromEmail = process.env.RESEND_FROM_EMAIL || "Qwizo <onboarding@resend.dev>";
+    this.fromEmail = process.env.RESEND_FROM_EMAIL || 'Qwizo <onboarding@resend.dev>';
   }
 
   async sendRegistrationOtp(to: string, name: string, otp: string): Promise<void> {
@@ -25,7 +25,7 @@ export class ResendEmailService implements IEmailService {
     await this.resend.emails.send({
       from: this.fromEmail,
       to,
-      subject: "Verify Your Qwizo Account",
+      subject: 'Verify Your Qwizo Account',
       html: `
         <div style="font-family: Arial, sans-serif; padding: 20px;">
           <h2>Welcome to Qwizo, ${name}!</h2>
@@ -41,4 +41,3 @@ export class ResendEmailService implements IEmailService {
     // For password reset flow in Phase 12
   }
 }
-

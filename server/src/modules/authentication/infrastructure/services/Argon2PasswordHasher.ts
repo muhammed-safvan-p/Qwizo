@@ -1,5 +1,5 @@
-import argon2 from "argon2";
-import type { IPasswordHasher } from "../../application/ports/IPasswordHasher.js";
+import argon2 from 'argon2';
+import type { IPasswordHasher } from '../../application/ports/IPasswordHasher.js';
 
 export class Argon2PasswordHasher implements IPasswordHasher {
   async hash(plainText: string): Promise<string> {
@@ -10,4 +10,3 @@ export class Argon2PasswordHasher implements IPasswordHasher {
     return argon2.verify(hash, plainText);
   }
 }
-

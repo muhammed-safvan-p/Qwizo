@@ -1,4 +1,4 @@
-import type { PendingRegistration } from "../../domain/entities/PendingRegistration.js";
+import type { PendingRegistration } from '../../domain/entities/PendingRegistration.js';
 
 export interface IPendingRegistrationRepository {
   findById(id: string): Promise<PendingRegistration | null>;
